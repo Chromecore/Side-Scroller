@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 06ab1c341392b4a318f67b84e0da6aab
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 263645
+  packageName: vTabs 2
+  packageVersion: 2.0.12
+  assetPath: Assets/vTabs/VTabs.asmdef
+  uploadId: 670792
