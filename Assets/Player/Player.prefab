@@ -136,7 +136,7 @@ MonoBehaviour:
   maxGrappleDistance: 15
   minGrappleDistance: 2
   grappleSwingSpeed: 0.01
-  grappleUpDownSpeed: 0.02
+  grappleUpDownSpeed: 10
   grappleReleaseX: 20
   grappleReleaseY: 0.3
   grappleGravity: 40

@@ -138,7 +138,7 @@ namespace Chromecore
 			// grapple up/down
 			if (joint.enabled)
 			{
-				float distance = joint.distance + InputHandler.Instance.playerActions.UpDown.ReadValue<float>() * grappleUpDownSpeed;
+				float distance = joint.distance + InputHandler.Instance.playerActions.UpDown.ReadValue<float>() * grappleUpDownSpeed * Time.deltaTime;
 				joint.distance = Mathf.Clamp(distance, minGrappleDistance, maxGrappleDistance);
 			}
 
