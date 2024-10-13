@@ -83,6 +83,8 @@ namespace Chromecore
 		[SerializeField, Required] private Rigidbody2D body;
 		[SerializeField, Required] private Camera mainCamera;
 
+		private bool canControl = true;
+
 		private void Reset()
 		{
 			body = GetComponent<Rigidbody2D>();
@@ -105,12 +107,19 @@ namespace Chromecore
 			InputHandler.Instance.playerActions.Grapple.performed += GrapplePressed;
 		}
 
+		private void OnDestroy()
+		{
+			InputHandler.Instance.playerActions.Jump.performed -= ProcessJumpInput;
+			InputHandler.Instance.playerActions.Run.performed -= Run;
+			InputHandler.Instance.playerActions.Grapple.performed -= GrapplePressed;
+		}
+
 		private void Update()
 		{
 			HandleGravity();
 
 			// apply movement
-			Move();
+			HandleMove();
 
 			// apex speed modifier
 			if (!joint.enabled)
@@ -197,6 +206,7 @@ namespace Chromecore
 
 		private void GrapplePressed(InputAction.CallbackContext ctx)
 		{
+			if (!canControl) return;
 			if (!ctx.action.IsPressed())
 			{
 				EndGrapple();
@@ -226,7 +236,7 @@ namespace Chromecore
 
 		private void ProcessJumpInput(InputAction.CallbackContext ctx)
 		{
-			if (joint.enabled) return;
+			if (joint.enabled || !canControl) return;
 			// jumps based on how long you hold the jump button
 			if (!ctx.action.IsPressed())
 			{
@@ -256,9 +266,9 @@ namespace Chromecore
 			isRunning = ctx.action.IsPressed() ? true : false;
 		}
 
-		private void Move()
+		private void HandleMove()
 		{
-			move = InputHandler.Instance.playerActions.Move.ReadValue<float>();
+			move = canControl ? InputHandler.Instance.playerActions.Move.ReadValue<float>() : 0;
 
 			if (joint.enabled)
 			{
@@ -289,6 +299,12 @@ namespace Chromecore
 				currentAccelerationTime += Time.deltaTime;
 				currentDeccelerationTime = 0;
 			}
+		}
+
+		public void Die()
+		{
+			canControl = false;
+			EndGrapple();
 		}
 
 		private void OnDrawGizmosSelected()
