@@ -29,8 +29,8 @@ namespace Chromecore
 		[SerializeField, Min(0)] private float minGrappleDistance;
 		[SerializeField, Min(0)] private float grappleSwingSpeed;
 		[SerializeField, Min(0)] private float grappleUpDownSpeed;
-		[SerializeField, Min(0)] private float grappleReleaseXMod = 10;
-		[SerializeField, Min(0)] private float grappleReleaseY = 20;
+		[SerializeField, Min(0)] private float grappleReleaseX = 20;
+		[SerializeField, Min(0)] private float grappleReleaseY = 1;
 		[SerializeField, Min(0)] private float grappleGravity;
 		[SerializeField, Range(0, 1)] private float grappleDrag;
 		[SerializeField, Required] private LineRenderer grappleLine;
@@ -224,8 +224,10 @@ namespace Chromecore
 		{
 			if (joint.enabled == false) return;
 			joint.enabled = false;
-			body.linearVelocityX *= grappleReleaseXMod;
-			body.linearVelocityY = grappleReleaseY;
+			float magnitude = body.linearVelocity.magnitude;
+			body.linearVelocityX = move * magnitude * grappleReleaseX;
+			if (body.linearVelocityY > 0) body.linearVelocityY += magnitude * grappleReleaseY;
+			else body.linearVelocityY = magnitude * grappleReleaseY;
 		}
 
 		private void StartGrapple(RaycastHit2D hit)

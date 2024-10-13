@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8afeb3c6b6322d2488144f79a99130ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 16
   runMultiplyer: 1.5
   accelerationTime: 0.5
   accelerationCurve:
@@ -137,8 +137,8 @@ MonoBehaviour:
   minGrappleDistance: 2
   grappleSwingSpeed: 0.01
   grappleUpDownSpeed: 0.02
-  grappleReleaseXMod: 10
-  grappleReleaseY: 20
+  grappleReleaseX: 20
+  grappleReleaseY: 0.3
   grappleGravity: 40
   grappleDrag: 0.001
   grappleLine: {fileID: 5301395870672389970}
