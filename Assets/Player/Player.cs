@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
     }
 
+    private void Awake()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Spike"))
