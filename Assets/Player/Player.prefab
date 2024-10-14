@@ -167,6 +167,8 @@ MonoBehaviour:
   sprite: {fileID: 623082256073916416}
   body: {fileID: 8577099436045729202}
   mainCamera: {fileID: 0}
+  bouncy: {fileID: 6200000, guid: 0723f816afde65e4a993922da7e51363, type: 2}
+  slippery: {fileID: 6200000, guid: e95973254b622f149813bfa844a635bb, type: 2}
 --- !u!61 &1583130596257181845
 BoxCollider2D:
   m_ObjectHideFlags: 0

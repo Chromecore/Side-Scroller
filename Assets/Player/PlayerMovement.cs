@@ -82,6 +82,8 @@ namespace Chromecore
 		[Title("Other")]
 		[SerializeField, Required] private Rigidbody2D body;
 		[SerializeField, Required] private Camera mainCamera;
+		[SerializeField, Required] private PhysicsMaterial2D bouncy;
+		[SerializeField, Required] private PhysicsMaterial2D slippery;
 
 		private bool canControl = true;
 
@@ -223,6 +225,7 @@ namespace Chromecore
 		private void EndGrapple()
 		{
 			if (joint.enabled == false) return;
+			body.sharedMaterial = slippery;
 			joint.enabled = false;
 			float magnitude = body.linearVelocity.magnitude;
 			body.linearVelocityX = move * magnitude * grappleReleaseX;
@@ -232,6 +235,7 @@ namespace Chromecore
 
 		private void StartGrapple(RaycastHit2D hit)
 		{
+			body.sharedMaterial = bouncy;
 			joint.connectedAnchor = hit.point;
 			joint.enabled = true;
 		}
