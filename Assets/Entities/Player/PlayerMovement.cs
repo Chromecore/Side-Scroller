@@ -222,11 +222,12 @@ namespace Chromecore
 			}
 		}
 
-		private void EndGrapple()
+		private void EndGrapple(bool instant = false)
 		{
 			if (joint.enabled == false) return;
 			body.sharedMaterial = slippery;
 			joint.enabled = false;
+			if (instant) return;
 			float magnitude = body.linearVelocity.magnitude;
 			body.linearVelocityX = move * magnitude * grappleReleaseX;
 			if (body.linearVelocityY > 0) body.linearVelocityY += magnitude * grappleReleaseY;
@@ -310,7 +311,12 @@ namespace Chromecore
 		public void Die()
 		{
 			canControl = false;
-			EndGrapple();
+			EndGrapple(true);
+		}
+
+		public void Spawn()
+		{
+			canControl = true;
 		}
 
 		private void OnDrawGizmosSelected()

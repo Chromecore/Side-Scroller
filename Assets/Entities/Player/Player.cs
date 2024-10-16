@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField, Required] private PlayerMovement playerMovement;
     [SerializeField, Required] private ParticleSystem deathParticles;
     [SerializeField, Required] private GameObject sprite;
+    [SerializeField, Required] private Transform mainSpawn;
 
     private void Reset()
     {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         PlayerPrefs.DeleteAll();
+        Spawn();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,6 +40,13 @@ public class Player : MonoBehaviour
         deathParticles.Play();
         sprite.SetActive(false);
         yield return new WaitForSeconds(deathTime);
-        SceneManager.LoadSceneAsync(0);
+        Spawn();
+    }
+
+    private void Spawn()
+    {
+        transform.position = mainSpawn.position;
+        sprite.SetActive(true);
+        playerMovement.Spawn();
     }
 }
