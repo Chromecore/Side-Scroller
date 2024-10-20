@@ -81,11 +81,13 @@ namespace Chromecore
 
 		[Title("Other")]
 		[SerializeField, Required] private Rigidbody2D body;
+		[SerializeField, Required] private ParticleSystem dustParticles;
 		[SerializeField, Required] private Camera mainCamera;
 		[SerializeField, Required] private PhysicsMaterial2D bouncy;
 		[SerializeField, Required] private PhysicsMaterial2D slippery;
 
 		private bool canControl = true;
+		private ParticleSystem.EmissionModule dustParticlesEmission;
 
 		private void Reset()
 		{
@@ -100,6 +102,7 @@ namespace Chromecore
 		private void Awake()
 		{
 			grappleCircle.localScale = Vector3.one * maxGrappleDistance * 2;
+			dustParticlesEmission = dustParticles.emission;
 		}
 
 		private void Start()
@@ -204,6 +207,7 @@ namespace Chromecore
 		{
 			onGround = Physics2D.OverlapBox(groundCheck.position, groundSize, 0, groundMask);
 			hitHead = Physics2D.OverlapBox(headCheck.position, headSize, 0, groundMask);
+			dustParticlesEmission.enabled = onGround;
 		}
 
 		private void GrapplePressed(InputAction.CallbackContext ctx)
@@ -279,7 +283,8 @@ namespace Chromecore
 
 			if (joint.enabled)
 			{
-				body.linearVelocity += -Vector2.Perpendicular(joint.connectedAnchor - joint.anchor).normalized * move * grappleSwingSpeed;
+				print((-Vector2.Perpendicular(joint.connectedAnchor - joint.anchor) * move).normalized * grappleSwingSpeed);
+				body.linearVelocity += (-Vector2.Perpendicular(joint.connectedAnchor - joint.anchor) * move).normalized * grappleSwingSpeed;
 				return;
 			}
 
@@ -306,6 +311,19 @@ namespace Chromecore
 				currentAccelerationTime += Time.deltaTime;
 				currentDeccelerationTime = 0;
 			}
+		}
+
+		private void OnTriggerEnter2D(Collider2D other)
+		{
+			if (other.CompareTag("GrappleTrigger"))
+			{
+				EnableGrappleVisuals();
+			}
+		}
+
+		private void EnableGrappleVisuals()
+		{
+			grappleCircle.gameObject.SetActive(true);
 		}
 
 		public void Die()

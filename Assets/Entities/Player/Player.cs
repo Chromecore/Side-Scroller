@@ -2,7 +2,6 @@ using System.Collections;
 using Chromecore;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
@@ -12,8 +11,11 @@ public class Player : MonoBehaviour
     [Title("References")]
     [SerializeField, Required] private PlayerMovement playerMovement;
     [SerializeField, Required] private ParticleSystem deathParticles;
+    [SerializeField, Required] private ParticleSystem checkpointParticles;
     [SerializeField, Required] private GameObject sprite;
     [SerializeField, Required] private Transform mainSpawn;
+
+    private Transform currentSpawn;
 
     private void Reset()
     {
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        currentSpawn = mainSpawn;
         PlayerPrefs.DeleteAll();
         Spawn();
     }
@@ -32,6 +35,17 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(Die());
         }
+        else if (other.CompareTag("CheckpointTrigger"))
+        {
+            SetCheckpoint(other.transform);
+        }
+    }
+
+    private void SetCheckpoint(Transform checkpoint)
+    {
+        if (currentSpawn == checkpoint) return;
+        currentSpawn = checkpoint;
+        checkpointParticles.Play();
     }
 
     private IEnumerator Die()
@@ -45,7 +59,7 @@ public class Player : MonoBehaviour
 
     private void Spawn()
     {
-        transform.position = mainSpawn.position;
+        transform.position = currentSpawn.position;
         sprite.SetActive(true);
         playerMovement.Spawn();
     }
