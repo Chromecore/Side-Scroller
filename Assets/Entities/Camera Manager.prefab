@@ -329,7 +329,7 @@ MonoBehaviour:
     OrthographicSize: 39.9
     NearClipPlane: 0.3
     FarClipPlane: 1000
-    Dutch: 0
+    Dutch: -1
     ModeOverride: 0
     PhysicalProperties:
       GateFit: 2

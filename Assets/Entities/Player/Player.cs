@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField, Required] private Transform mainSpawn;
 
     private Transform currentSpawn;
+    private bool isDead;
 
     private void Reset()
     {
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Spike"))
         {
-            StartCoroutine(Die());
+            Die();
         }
         else if (other.CompareTag("CheckpointTrigger"))
         {
@@ -48,8 +49,15 @@ public class Player : MonoBehaviour
         checkpointParticles.Play();
     }
 
-    private IEnumerator Die()
+    private void Die()
     {
+        if (isDead) return;
+        StartCoroutine(HandleDie());
+    }
+
+    private IEnumerator HandleDie()
+    {
+        isDead = true;
         playerMovement.Die();
         deathParticles.Play();
         sprite.SetActive(false);
@@ -59,6 +67,7 @@ public class Player : MonoBehaviour
 
     private void Spawn()
     {
+        isDead = false;
         transform.position = currentSpawn.position;
         sprite.SetActive(true);
         playerMovement.Spawn();

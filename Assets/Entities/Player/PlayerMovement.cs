@@ -124,7 +124,6 @@ namespace Chromecore
 		{
 			move = canControl ? InputHandler.Instance.playerActions.Move.ReadValue<float>() : 0;
 			updownInput = InputHandler.Instance.playerActions.UpDown.ReadValue<float>();
-			dustParticlesEmission.enabled = onGround;
 			HandleJumpEffects();
 			HandleVisualEffects();
 		}
@@ -167,6 +166,8 @@ namespace Chromecore
 
 		private void HandleVisualEffects()
 		{
+			dustParticlesEmission.enabled = onGround && canControl;
+
 			float tiltAmount = body.linearVelocityX < -0.01f ? spriteTiltAngle : body.linearVelocityX > 0.01f ? -spriteTiltAngle : 0;
 			Vector3 rotation = sprite.localEulerAngles;
 			rotation.z = tiltAmount;
