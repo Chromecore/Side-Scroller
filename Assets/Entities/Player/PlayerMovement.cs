@@ -88,6 +88,7 @@ namespace Chromecore
 
 		private bool canControl = true;
 		private ParticleSystem.EmissionModule dustParticlesEmission;
+		private float updownInput;
 
 		private void Reset()
 		{
@@ -121,6 +122,18 @@ namespace Chromecore
 
 		private void Update()
 		{
+			move = canControl ? InputHandler.Instance.playerActions.Move.ReadValue<float>() : 0;
+			updownInput = InputHandler.Instance.playerActions.UpDown.ReadValue<float>();
+			dustParticlesEmission.enabled = onGround;
+			HandleJumpEffects();
+			HandleVisualEffects();
+		}
+
+		private void FixedUpdate()
+		{
+			onGround = Physics2D.OverlapBox(groundCheck.position, groundSize, 0, groundMask);
+			hitHead = Physics2D.OverlapBox(headCheck.position, headSize, 0, groundMask);
+
 			HandleGravity();
 
 			// apply movement
@@ -131,27 +144,25 @@ namespace Chromecore
 			{
 				apexPoint = Mathf.InverseLerp(jumpApexThreashold, 0, 1 / Mathf.Abs(body.linearVelocityY));
 				float apexBonus = Mathf.Sign(move) * apexBonusSpeed * apexPoint;
-				body.linearVelocityX += apexBonus * Time.deltaTime;
+				body.linearVelocityX += apexBonus * Time.fixedDeltaTime;
 			}
 
 			// drag
 			if (joint.enabled && move == 0)
 			{
-				body.linearVelocity -= body.linearVelocity * grappleDrag;
+				float dragMultiplyer = 60;
+				body.linearVelocity -= body.linearVelocity * grappleDrag * dragMultiplyer * Time.fixedDeltaTime;
 			}
 
 			// grapple up/down
 			if (joint.enabled)
 			{
-				float distance = joint.distance + InputHandler.Instance.playerActions.UpDown.ReadValue<float>() * grappleUpDownSpeed * Time.deltaTime;
+				float distance = joint.distance + updownInput * grappleUpDownSpeed * Time.fixedDeltaTime;
 				joint.distance = Mathf.Clamp(distance, minGrappleDistance, maxGrappleDistance);
 			}
 
 			// Max fall speed
 			if (!joint.enabled) body.linearVelocityY = Mathf.Max(body.linearVelocityY, -maxFallSpeed);
-
-			HandleJumpEffects();
-			HandleVisualEffects();
 		}
 
 		private void HandleVisualEffects()
@@ -189,7 +200,7 @@ namespace Chromecore
 		private void HandleGravity()
 		{
 			// apply gravity : fall faster if going down
-			body.linearVelocityY -= (joint.enabled ? grappleGravity : gravityAmount) * Time.deltaTime * (body.linearVelocityY < 0 ? fallGravityScale : 1);
+			body.linearVelocityY -= (joint.enabled ? grappleGravity : gravityAmount) * Time.fixedDeltaTime * (body.linearVelocityY < 0 ? fallGravityScale : 1);
 
 			if (joint.enabled) return;
 
@@ -201,13 +212,6 @@ namespace Chromecore
 			{
 				body.linearVelocityY = 0;
 			}
-		}
-
-		private void FixedUpdate()
-		{
-			onGround = Physics2D.OverlapBox(groundCheck.position, groundSize, 0, groundMask);
-			hitHead = Physics2D.OverlapBox(headCheck.position, headSize, 0, groundMask);
-			dustParticlesEmission.enabled = onGround;
 		}
 
 		private void GrapplePressed(InputAction.CallbackContext ctx)
@@ -279,12 +283,9 @@ namespace Chromecore
 
 		private void HandleMove()
 		{
-			move = canControl ? InputHandler.Instance.playerActions.Move.ReadValue<float>() : 0;
-
 			if (joint.enabled)
 			{
-				print((-Vector2.Perpendicular(joint.connectedAnchor - joint.anchor) * move).normalized * grappleSwingSpeed);
-				body.linearVelocity += (-Vector2.Perpendicular(joint.connectedAnchor - joint.anchor) * move).normalized * grappleSwingSpeed;
+				body.linearVelocity += -Vector2.Perpendicular(joint.connectedAnchor - joint.anchor).normalized * move * grappleSwingSpeed * Time.fixedDeltaTime;
 				return;
 			}
 
@@ -293,7 +294,7 @@ namespace Chromecore
 				// deccelerate
 				float decceleration = deccelerationCurve.Evaluate(currentDeccelerationTime / deccelerationTime);
 				body.linearVelocityX *= decceleration;
-				currentDeccelerationTime += Time.deltaTime;
+				currentDeccelerationTime += Time.fixedDeltaTime;
 				currentAccelerationTime = 0;
 			}
 			else
@@ -308,7 +309,7 @@ namespace Chromecore
 				speed *= isRunning ? runMultiplyer : 1;
 
 				body.linearVelocityX = move * speed;
-				currentAccelerationTime += Time.deltaTime;
+				currentAccelerationTime += Time.fixedDeltaTime;
 				currentDeccelerationTime = 0;
 			}
 		}
