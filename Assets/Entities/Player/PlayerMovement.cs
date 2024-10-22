@@ -245,6 +245,9 @@ namespace Chromecore
 
 		private void StartGrapple(RaycastHit2D hit)
 		{
+			SoundManager.Instance.CreateSound()
+				.WithRandomPitch()
+				.Play(GeneralSound.grappleHit);
 			body.sharedMaterial = bouncy;
 			joint.connectedAnchor = hit.point;
 			joint.enabled = true;
@@ -273,6 +276,11 @@ namespace Chromecore
 
 			bool canCoyoteTime = !onGround && coyoteTimer <= coyoteTime;
 			if (!onGround && !canCoyoteTime) return;
+
+			SoundManager.Instance.CreateSound()
+				.WithRandomPitch()
+				.Play(GeneralSound.jump);
+
 			body.linearVelocityY = Mathf.Sqrt(jumpHeight * 2 * gravityAmount);
 			onGround = false;
 		}

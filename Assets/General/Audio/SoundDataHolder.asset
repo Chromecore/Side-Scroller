@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec762a071a26364a9eb581ccfe366d8, type: 3}
+  m_Name: SoundDataHolder
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: -4556942360087594564, guid: 00c1252a4a919be4b89e501552a602a8, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: soundDatas
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[GeneralSound, Assembly-CSharp],[SoundData,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[GeneralSound, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 2|SoundData, Assembly-CSharp
+    - Name: clip
+      Entry: 6
+      Data: 
+    - Name: mixerGroup
+      Entry: 10
+      Data: 0
+    - Name: loop
+      Entry: 5
+      Data: false
+    - Name: playOnAwake
+      Entry: 5
+      Data: false
+    - Name: frequentSound
+      Entry: 5
+      Data: false
+    - Name: priority
+      Entry: 3
+      Data: 128
+    - Name: volumne
+      Entry: 4
+      Data: 1
+    - Name: pitch
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 3|SoundData, Assembly-CSharp
+    - Name: clip
+      Entry: 6
+      Data: 
+    - Name: mixerGroup
+      Entry: 10
+      Data: 0
+    - Name: loop
+      Entry: 5
+      Data: false
+    - Name: playOnAwake
+      Entry: 5
+      Data: false
+    - Name: frequentSound
+      Entry: 5
+      Data: false
+    - Name: priority
+      Entry: 3
+      Data: 128
+    - Name: volumne
+      Entry: 4
+      Data: 1
+    - Name: pitch
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
