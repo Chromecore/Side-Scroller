@@ -17,6 +17,8 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: -4556942360087594564, guid: 00c1252a4a919be4b89e501552a602a8, type: 2}
+    - {fileID: 8300000, guid: 1d54af72b7b1e1b498aee56fd7d167d3, type: 3}
+    - {fileID: 8300000, guid: 2f9e40b8b78c83e4ea93359cf8d3ac0c, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -130,8 +132,8 @@ MonoBehaviour:
       Entry: 7
       Data: 4|SoundData, Assembly-CSharp
     - Name: clip
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: mixerGroup
       Entry: 10
       Data: 0
@@ -169,8 +171,8 @@ MonoBehaviour:
       Entry: 7
       Data: 5|SoundData, Assembly-CSharp
     - Name: clip
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 2
     - Name: mixerGroup
       Entry: 10
       Data: 0
@@ -188,10 +190,10 @@ MonoBehaviour:
       Data: 128
     - Name: volumne
       Entry: 4
-      Data: 1
+      Data: 0.6
     - Name: pitch
       Entry: 4
-      Data: 1
+      Data: 0.7
     - Name: 
       Entry: 8
       Data: 
