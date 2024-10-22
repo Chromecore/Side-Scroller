@@ -66,6 +66,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator HandleDie()
     {
+        SoundManager.Instance.CreateSound()
+            .WithRandomPitch()
+            .Play(GeneralSound.death);
         isDead = true;
         playerMovement.Die();
         deathParticles.Play();
@@ -76,6 +79,9 @@ public class Player : MonoBehaviour
 
     private void Spawn()
     {
+        SoundManager.Instance.CreateSound()
+            .WithRandomPitch()
+            .Play(GeneralSound.spawn);
         isDead = false;
         transform.position = currentSpawn;
         sprite.SetActive(true);

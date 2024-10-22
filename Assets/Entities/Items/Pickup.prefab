@@ -174,7 +174,7 @@ MonoBehaviour:
   visualsParent: {fileID: 4075394165655137285}
   deathParticles: {fileID: 0}
   deathAudio:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: bceb8d53b7aac4ebab89a8fd2e1139a5, type: 3}
     mixerGroup: {fileID: -4556942360087594564, guid: 00c1252a4a919be4b89e501552a602a8, type: 2}
     loop: 0
     playOnAwake: 0

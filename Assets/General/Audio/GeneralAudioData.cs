@@ -11,5 +11,7 @@ public class GeneralSoundData : SerializedScriptableObject
 public enum GeneralSound
 {
     none = 0,
-    jump = 3, grappleHit = 4
+    jump = 3, grappleHit = 4,
+    death = 1,
+    spawn = 2,
 };
