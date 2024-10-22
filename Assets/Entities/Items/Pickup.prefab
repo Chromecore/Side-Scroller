@@ -172,3 +172,4 @@ MonoBehaviour:
   bounceSpeed: 2
   bounceHeight: 0.4
   visualsParent: {fileID: 4075394165655137285}
+  deathParticles: {fileID: 0}

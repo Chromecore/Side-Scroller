@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GrappleTrigger
   - CheckpointTrigger
+  - Pickup2
   layers:
   - Default
   - TransparentFX

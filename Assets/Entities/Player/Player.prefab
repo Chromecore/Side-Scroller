@@ -251,11 +251,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathTime: 0.75
+  pickup2Total: 6
   playerMovement: {fileID: 1729344341340179433}
   deathParticles: {fileID: 8875302756107393628}
   checkpointParticles: {fileID: 4267875994326506520}
   sprite: {fileID: 2779992705306267644}
-  mainSpawn: {fileID: 0}
+  pickup2Text: {fileID: 0}
 --- !u!1 &2779992705306267644
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class Pickup : MonoBehaviour
     [SerializeField, Min(0)] private float bounceSpeed;
     [SerializeField, Min(0)] private float bounceHeight;
     [SerializeField, Required] private Transform visualsParent;
+    [SerializeField, AssetsOnly] private ParticleSystem deathParticles;
 
     private Vector2 position;
     private float offset;
@@ -23,6 +24,7 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (deathParticles != null) Instantiate(deathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
