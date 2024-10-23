@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
     }
 
-    private void Awake()
+    private void Start()
     {
         pickup2Text.text = $"{pickup2Count}/{pickup2Total}";
         currentSpawn = transform.position;
