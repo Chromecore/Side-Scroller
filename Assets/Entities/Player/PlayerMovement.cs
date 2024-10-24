@@ -36,6 +36,7 @@ namespace Chromecore
 		[SerializeField, Min(0)] private float grappleGravity;
 		[SerializeField, Range(0, 1)] private float grappleDrag;
 		[SerializeField, Required] private LineRenderer grappleLine;
+		[SerializeField, Required] private LineRenderer grappleLinePreview;
 		[SerializeField, Required] private Transform grappleCircle;
 		[SerializeField, Required] private DistanceJoint2D joint;
 		[SerializeField] private LayerMask grappleLayer;
@@ -91,6 +92,7 @@ namespace Chromecore
 		private bool canControl = true;
 		private ParticleSystem.EmissionModule dustParticlesEmission;
 		private float updownInput;
+		private Vector2 worldMousePosition;
 
 		private void Reset()
 		{
@@ -126,6 +128,8 @@ namespace Chromecore
 		{
 			move = canControl ? InputHandler.Instance.playerActions.Move.ReadValue<float>() : 0;
 			updownInput = InputHandler.Instance.playerActions.UpDown.ReadValue<float>();
+			worldMousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+
 			HandleJumpEffects();
 			HandleVisualEffects();
 		}
@@ -182,6 +186,11 @@ namespace Chromecore
 				grappleLine.SetPosition(0, transform.position);
 				grappleLine.SetPosition(1, joint.connectedAnchor);
 			}
+			grappleLinePreview.enabled = !joint.enabled;
+			grappleLinePreview.SetPosition(0, transform.position);
+			Vector2 direction = ((Vector3)worldMousePosition - transform.position).normalized;
+			float distance = Mathf.Min(maxGrappleDistance, ((Vector3)worldMousePosition - transform.position).magnitude);
+			grappleLinePreview.SetPosition(1, (Vector2)transform.position + direction * distance);
 		}
 
 		private void HandleJumpEffects()
@@ -234,7 +243,7 @@ namespace Chromecore
 
 		private RaycastHit2D GetGrappleHit()
 		{
-			Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+			Vector2 direction = ((Vector3)worldMousePosition - transform.position).normalized;
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxGrappleDistance, grappleLayer);
 			if (hit.collider != null) return hit;
 
@@ -364,6 +373,7 @@ namespace Chromecore
 		private void EnableGrappleVisuals()
 		{
 			grappleCircle.gameObject.SetActive(true);
+			grappleLinePreview.gameObject.SetActive(true);
 		}
 
 		public void Die()
