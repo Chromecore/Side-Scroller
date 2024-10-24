@@ -25,6 +25,8 @@ namespace Chromecore
 		private float move;
 
 		[Title("Grapple")]
+		[SerializeField, Min(0)] private float grappleRaySpacing;
+		[SerializeField, Min(0)] private float grappleRayCount;
 		[SerializeField, Min(0)] private float maxGrappleDistance;
 		[SerializeField, Min(0)] private float minGrappleDistance;
 		[SerializeField, Min(0)] private float grappleSwingSpeed;
@@ -223,12 +225,40 @@ namespace Chromecore
 				EndGrapple();
 				return;
 			}
-			Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-			RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxGrappleDistance, grappleLayer);
+			RaycastHit2D hit = GetGrappleHit();
 			if (hit.collider != null)
 			{
 				StartGrapple(hit);
 			}
+		}
+
+		private RaycastHit2D GetGrappleHit()
+		{
+			Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+			RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxGrappleDistance, grappleLayer);
+			if (hit.collider != null) return hit;
+
+			for (int i = 0; i < grappleRayCount; i++)
+			{
+				hit = Physics2D.Raycast(transform.position, RotateVector(direction, i * grappleRaySpacing), maxGrappleDistance, grappleLayer);
+				if (hit.collider != null) return hit;
+				hit = Physics2D.Raycast(transform.position, RotateVector(direction, -i * grappleRaySpacing), maxGrappleDistance, grappleLayer);
+				if (hit.collider != null) return hit;
+			}
+
+			return default;
+		}
+
+		private Vector2 RotateVector(Vector2 vector, float degrees)
+		{
+			float radians = degrees * Mathf.Deg2Rad;
+			float cos = Mathf.Cos(radians);
+			float sin = Mathf.Sin(radians);
+
+			return new Vector2(
+				cos * vector.x - sin * vector.y,
+				sin * vector.x + cos * vector.y
+			);
 		}
 
 		private void EndGrapple(bool instant = false)

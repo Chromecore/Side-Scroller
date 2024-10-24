@@ -135,6 +135,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  grappleRaySpacing: 1.5
+  grappleRayCount: 5
   maxGrappleDistance: 24
   minGrappleDistance: 2
   grappleSwingSpeed: 14
