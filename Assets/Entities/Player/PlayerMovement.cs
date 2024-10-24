@@ -37,6 +37,7 @@ namespace Chromecore
 		[SerializeField, Range(0, 1)] private float grappleDrag;
 		[SerializeField, Required] private LineRenderer grappleLine;
 		[SerializeField, Required] private LineRenderer grappleLinePreview;
+		[SerializeField, Required] private ParticleSystem grappleTrail;
 		[SerializeField, Required] private Transform grappleCircle;
 		[SerializeField, Required] private DistanceJoint2D joint;
 		[SerializeField] private LayerMask grappleLayer;
@@ -180,6 +181,7 @@ namespace Chromecore
 			sprite.localEulerAngles = rotation;
 
 			// grapple
+			grappleTrail.gameObject.SetActive(joint.enabled);
 			grappleLine.gameObject.SetActive(joint.enabled);
 			if (grappleLine.gameObject.activeSelf)
 			{
