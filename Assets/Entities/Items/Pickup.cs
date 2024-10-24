@@ -25,10 +25,16 @@ public class Pickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Player")) return;
         if (deathParticles != null) Instantiate(deathParticles, transform.position, Quaternion.identity);
         SoundManager.Instance.CreateSound()
             .WithRandomPitch()
             .Play(deathAudio);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public void Reset()
+    {
+        gameObject.SetActive(true);
     }
 }

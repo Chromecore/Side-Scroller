@@ -167,7 +167,7 @@ namespace Chromecore
 				joint.distance = Mathf.Clamp(distance, minGrappleDistance, maxGrappleDistance);
 			}
 
-			// Max fall speed
+			// max speed
 			if (!joint.enabled) body.linearVelocityY = Mathf.Max(body.linearVelocityY, -maxFallSpeed);
 		}
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Chromecore;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -14,12 +15,15 @@ public class Player : MonoBehaviour
     [SerializeField, Required] private PlayerMovement playerMovement;
     [SerializeField, Required] private ParticleSystem deathParticles;
     [SerializeField, Required] private ParticleSystem checkpointParticles;
+    [SerializeField, Required] private ParticleSystem pickupDropParticles;
     [SerializeField, Required] private GameObject sprite;
     [SerializeField, Required] private TMP_Text pickup2Text;
 
     private Vector3 currentSpawn;
     private bool isDead;
     private int pickup2Count;
+
+    private List<Pickup> pickup2sSinceLastCheckpoint = new();
 
     private void Reset()
     {
@@ -46,14 +50,16 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("Pickup2"))
         {
+            pickup2sSinceLastCheckpoint.Add(other.GetComponent<Pickup>());
             pickup2Count++;
-            pickup2Text.text = $"{pickup2Count}/{pickup2Total}";
+            UpdatePickupUI();
         }
     }
 
     private void SetCheckpoint(Transform checkpoint)
     {
         if (currentSpawn == checkpoint.position) return;
+        pickup2sSinceLastCheckpoint.Clear();
         currentSpawn = checkpoint.position;
         checkpointParticles.Play();
     }
@@ -66,6 +72,14 @@ public class Player : MonoBehaviour
 
     private IEnumerator HandleDie()
     {
+        foreach (Pickup pickup in pickup2sSinceLastCheckpoint)
+        {
+            pickup.Reset();
+            pickup2Count--;
+            UpdatePickupUI();
+            pickupDropParticles.Play();
+        }
+        pickup2sSinceLastCheckpoint.Clear();
         SoundManager.Instance.CreateSound()
             .WithRandomPitch()
             .Play(GeneralSound.death);
@@ -75,6 +89,11 @@ public class Player : MonoBehaviour
         sprite.SetActive(false);
         yield return new WaitForSeconds(deathTime);
         Spawn();
+    }
+
+    private void UpdatePickupUI()
+    {
+        pickup2Text.text = $"{pickup2Count}/{pickup2Total}";
     }
 
     private void Spawn()
