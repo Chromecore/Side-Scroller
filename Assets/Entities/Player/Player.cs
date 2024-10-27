@@ -15,13 +15,16 @@ public class Player : MonoBehaviour
     [SerializeField, Required] private PlayerMovement playerMovement;
     [SerializeField, Required] private ParticleSystem deathParticles;
     [SerializeField, Required] private ParticleSystem checkpointParticles;
+    [SerializeField, Required] private ParticleSystem endParticles;
     [SerializeField, Required] private ParticleSystem pickupDropParticles;
     [SerializeField, Required] private GameObject sprite;
     [SerializeField, Required] private TMP_Text pickup2Text;
+    [SerializeField, Required] private TMP_Text deathsText;
 
     private Vector3 currentSpawn;
     private bool isDead;
     private int pickup2Count;
+    private int deaths;
 
     private List<Pickup> pickup2sSinceLastCheckpoint = new();
 
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         pickup2Text.text = $"{pickup2Count}/{pickup2Total}";
+        deathsText.text = "0";
         currentSpawn = transform.position;
         PlayerPrefs.DeleteAll();
         Spawn();
@@ -44,9 +48,9 @@ public class Player : MonoBehaviour
         {
             Die();
         }
-        else if (other.CompareTag("CheckpointTrigger"))
+        else if (other.CompareTag("CheckpointTrigger") || other.CompareTag("Ending"))
         {
-            SetCheckpoint(other.transform);
+            SetCheckpoint(other.transform, other.CompareTag("Ending"));
         }
         else if (other.CompareTag("Pickup2"))
         {
@@ -56,15 +60,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void SetCheckpoint(Transform checkpoint)
+    private void SetCheckpoint(Transform checkpoint, bool ending)
     {
         if (currentSpawn == checkpoint.position) return;
         pickup2sSinceLastCheckpoint.Clear();
         currentSpawn = checkpoint.position;
-        checkpointParticles.Play();
         SoundManager.Instance.CreateSound()
             .WithRandomPitch()
             .Play(GeneralSound.checkpoint);
+        if (ending)
+        {
+            endParticles.Play();
+        }
+        else
+        {
+            checkpointParticles.Play();
+        }
     }
 
     private void Die()
@@ -87,6 +98,8 @@ public class Player : MonoBehaviour
             .WithRandomPitch()
             .Play(GeneralSound.death);
         isDead = true;
+        deaths++;
+        deathsText.text = deaths.ToString();
         playerMovement.Die();
         deathParticles.Play();
         sprite.SetActive(false);
