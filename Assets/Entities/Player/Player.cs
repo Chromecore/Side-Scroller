@@ -62,6 +62,9 @@ public class Player : MonoBehaviour
         pickup2sSinceLastCheckpoint.Clear();
         currentSpawn = checkpoint.position;
         checkpointParticles.Play();
+        SoundManager.Instance.CreateSound()
+            .WithRandomPitch()
+            .Play(GeneralSound.checkpoint);
     }
 
     private void Die()

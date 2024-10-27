@@ -93,7 +93,7 @@ MonoBehaviour:
     playOnAwake: 0
     frequentSound: 0
     priority: 128
-    volumne: 1
+    volumne: 0.6
     pitch: 1
 --- !u!1 &2312631998991360792
 GameObject:

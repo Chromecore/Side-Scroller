@@ -16,9 +16,12 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 8300000, guid: 30c8c0ef6651e0f4495fe40bed275282, type: 3}
     - {fileID: -4556942360087594564, guid: 00c1252a4a919be4b89e501552a602a8, type: 2}
+    - {fileID: 8300000, guid: 55ff05a7a59a0ce4a960263ee21fb000, type: 3}
     - {fileID: 8300000, guid: 1d54af72b7b1e1b498aee56fd7d167d3, type: 3}
     - {fileID: 8300000, guid: 2f9e40b8b78c83e4ea93359cf8d3ac0c, type: 3}
+    - {fileID: 8300000, guid: 8d57dab8144a5b042a85a51934d9af44, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -43,7 +46,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 5
     - Name: 
       Entry: 7
       Data: 
@@ -54,11 +57,11 @@ MonoBehaviour:
       Entry: 7
       Data: 2|SoundData, Assembly-CSharp
     - Name: clip
-      Entry: 6
-      Data: 
-    - Name: mixerGroup
       Entry: 10
       Data: 0
+    - Name: mixerGroup
+      Entry: 10
+      Data: 1
     - Name: loop
       Entry: 5
       Data: false
@@ -73,7 +76,7 @@ MonoBehaviour:
       Data: 128
     - Name: volumne
       Entry: 4
-      Data: 1
+      Data: 0.3
     - Name: pitch
       Entry: 4
       Data: 1
@@ -93,11 +96,11 @@ MonoBehaviour:
       Entry: 7
       Data: 3|SoundData, Assembly-CSharp
     - Name: clip
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 2
     - Name: mixerGroup
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: loop
       Entry: 5
       Data: false
@@ -133,10 +136,10 @@ MonoBehaviour:
       Data: 4|SoundData, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 1
+      Data: 3
     - Name: mixerGroup
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: loop
       Entry: 5
       Data: false
@@ -172,10 +175,10 @@ MonoBehaviour:
       Data: 5|SoundData, Assembly-CSharp
     - Name: clip
       Entry: 10
-      Data: 2
+      Data: 4
     - Name: mixerGroup
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: loop
       Entry: 5
       Data: false
@@ -194,6 +197,45 @@ MonoBehaviour:
     - Name: pitch
       Entry: 4
       Data: 0.7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: 6|SoundData, Assembly-CSharp
+    - Name: clip
+      Entry: 10
+      Data: 5
+    - Name: mixerGroup
+      Entry: 10
+      Data: 1
+    - Name: loop
+      Entry: 5
+      Data: false
+    - Name: playOnAwake
+      Entry: 5
+      Data: false
+    - Name: frequentSound
+      Entry: 5
+      Data: false
+    - Name: priority
+      Entry: 3
+      Data: 128
+    - Name: volumne
+      Entry: 4
+      Data: 1.2
+    - Name: pitch
+      Entry: 4
+      Data: 1
     - Name: 
       Entry: 8
       Data: 

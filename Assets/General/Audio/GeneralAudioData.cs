@@ -14,4 +14,5 @@ public enum GeneralSound
     jump = 3, grappleHit = 4,
     death = 1,
     spawn = 2,
+    checkpoint = 5,
 };

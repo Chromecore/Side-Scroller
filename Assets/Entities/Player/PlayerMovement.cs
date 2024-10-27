@@ -319,7 +319,7 @@ namespace Chromecore
 			if (!onGround && !canCoyoteTime) return;
 
 			SoundManager.Instance.CreateSound()
-				.WithRandomPitch()
+				.WithRandomPitch(-0.1f, 0.1f)
 				.Play(GeneralSound.jump);
 
 			body.linearVelocityY = Mathf.Sqrt(jumpHeight * 2 * gravityAmount);
