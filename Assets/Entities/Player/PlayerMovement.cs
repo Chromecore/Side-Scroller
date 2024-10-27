@@ -9,6 +9,7 @@ namespace Chromecore
 	{
 		[Title("Move"), Min(0.01f)]
 		[SerializeField] private float moveSpeed;
+		[SerializeField] private float maxXMoveSpeed;
 		[Tooltip("@moveSpeed * runMultiplyer"), Min(1)]
 		[SerializeField] private float runMultiplyer;
 		[Min(0.1f), HorizontalGroup("Acceleration"), Tooltip("How long it takes to get up to full speed")]
@@ -41,6 +42,7 @@ namespace Chromecore
 		[SerializeField, Required] private Transform grappleCircle;
 		[SerializeField, Required] private DistanceJoint2D joint;
 		[SerializeField] private LayerMask grappleLayer;
+		private bool grappleEnabled;
 
 		[Title("Jump"), Min(0)]
 		[SerializeField] private float jumpHeight;
@@ -169,6 +171,7 @@ namespace Chromecore
 
 			// max speed
 			if (!joint.enabled) body.linearVelocityY = Mathf.Max(body.linearVelocityY, -maxFallSpeed);
+			if (!joint.enabled) body.linearVelocityX = Mathf.Clamp(body.linearVelocityX, -maxXMoveSpeed, maxXMoveSpeed);
 		}
 
 		private void HandleVisualEffects()
@@ -368,25 +371,28 @@ namespace Chromecore
 		{
 			if (other.CompareTag("GrappleTrigger"))
 			{
-				EnableGrappleVisuals();
+				grappleEnabled = true;
+				ToggleGrappleVisuals(true);
 			}
 		}
 
-		private void EnableGrappleVisuals()
+		private void ToggleGrappleVisuals(bool toggle)
 		{
-			grappleCircle.gameObject.SetActive(true);
-			grappleLinePreview.gameObject.SetActive(true);
+			grappleCircle.gameObject.SetActive(toggle);
+			grappleLinePreview.gameObject.SetActive(toggle);
 		}
 
 		public void Die()
 		{
 			canControl = false;
+			ToggleGrappleVisuals(false);
 			EndGrapple(true);
 		}
 
 		public void Spawn()
 		{
 			canControl = true;
+			if (grappleEnabled) ToggleGrappleVisuals(true);
 		}
 
 		private void OnDrawGizmosSelected()
