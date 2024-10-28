@@ -4921,6 +4921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 30
+  maxXMoveSpeed: 0
   runMultiplyer: 1
   accelerationTime: 0.25
   accelerationCurve:
