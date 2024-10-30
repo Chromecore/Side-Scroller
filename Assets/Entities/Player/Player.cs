@@ -9,7 +9,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField, Min(0), Unit(Units.Second)] private float deathTime;
-    [SerializeField, Min(0)] private float pickup2Total;
+    [Min(0)] public float pickup2Total;
 
     [Title("References")]
     [SerializeField, Required] private PlayerMovement playerMovement;
@@ -20,11 +20,14 @@ public class Player : MonoBehaviour
     [SerializeField, Required] private GameObject sprite;
     [SerializeField, Required] private TMP_Text pickup2Text;
     [SerializeField, Required] private TMP_Text deathsText;
+    [SerializeField, Required] private TMP_Text timeText;
+    [SerializeField, Required] private GameObject endingUI;
 
     private Vector3 currentSpawn;
     private bool isDead;
-    private int pickup2Count;
-    private int deaths;
+    public int pickup2Count { get; private set; }
+    public int deaths { get; private set; }
+    public int time { get; private set; }
 
     private List<Pickup> pickup2sSinceLastCheckpoint = new();
 
@@ -40,6 +43,11 @@ public class Player : MonoBehaviour
         currentSpawn = transform.position;
         PlayerPrefs.DeleteAll();
         Spawn();
+    }
+
+    private void Update()
+    {
+        timeText.text = EndingUI.GetTimeString();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -71,6 +79,7 @@ public class Player : MonoBehaviour
         if (ending)
         {
             endParticles.Play();
+            End();
         }
         else
         {
@@ -100,7 +109,7 @@ public class Player : MonoBehaviour
         isDead = true;
         deaths++;
         deathsText.text = deaths.ToString();
-        playerMovement.Die();
+        playerMovement.StopMovement();
         deathParticles.Play();
         sprite.SetActive(false);
         yield return new WaitForSeconds(deathTime);
@@ -121,5 +130,11 @@ public class Player : MonoBehaviour
         transform.position = currentSpawn;
         sprite.SetActive(true);
         playerMovement.Spawn();
+    }
+
+    public void End()
+    {
+        playerMovement.StopMovement();
+        endingUI.SetActive(true);
     }
 }

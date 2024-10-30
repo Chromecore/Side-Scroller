@@ -382,7 +382,7 @@ namespace Chromecore
 			grappleLinePreview.gameObject.SetActive(toggle);
 		}
 
-		public void Die()
+		public void StopMovement()
 		{
 			canControl = false;
 			ToggleGrappleVisuals(false);
