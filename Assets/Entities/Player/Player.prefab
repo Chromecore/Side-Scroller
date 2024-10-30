@@ -5102,6 +5102,8 @@ MonoBehaviour:
   sprite: {fileID: 2779992705306267644}
   pickup2Text: {fileID: 0}
   deathsText: {fileID: 0}
+  timeText: {fileID: 0}
+  endingUI: {fileID: 0}
 --- !u!1 &2779992705306267644
 GameObject:
   m_ObjectHideFlags: 0

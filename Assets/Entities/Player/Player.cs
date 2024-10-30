@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
         if (ending)
         {
             endParticles.Play();
-            End();
+            StartEnd();
         }
         else
         {
@@ -132,9 +132,15 @@ public class Player : MonoBehaviour
         playerMovement.Spawn();
     }
 
-    public void End()
+    private void StartEnd()
+    {
+        StartCoroutine(EndSequnce());
+    }
+
+    private IEnumerator EndSequnce()
     {
         playerMovement.StopMovement();
+        yield return new WaitForSeconds(1f);
         endingUI.SetActive(true);
     }
 }

@@ -12,12 +12,14 @@ public class EndingUI : MonoBehaviour
 
     [Title("Outside References")]
     [SerializeField, Required] private Player player;
+    [SerializeField, Required] private GameObject otherUI;
 
     private void OnEnable()
     {
         pickup2Text.text = $"{player.pickup2Count}/{player.pickup2Total}";
         deathText.text = player.deaths.ToString();
         timeText.text = GetTimeString();
+        otherUI.SetActive(false);
     }
 
     public static string GetTimeString()
